@@ -48,6 +48,49 @@ docker build -t airbyte/source-zendesk-custom:dev .
 docker run --rm airbyte/source-zendesk-custom:dev spec
 ```
 
+## How to test
+
+### 1. Local (fastest)
+
+```bash
+cd airbyte-connector-zendesk
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && pip install -e .
+python main.py spec
+python main.py check --config secrets/config.json
+python main.py discover --config secrets/config.json
+```
+
+Optional sample read (writes Airbyte messages to stdout):
+
+```bash
+# Use a minimal catalog JSON with one stream; or copy from Airbyte UI after discover.
+python main.py read --config secrets/config.json --catalog path/to/catalog.json
+```
+
+### 2. Docker image locally
+
+```bash
+docker build -t zendesk-custom:test .
+docker run --rm zendesk-custom:test spec
+docker run --rm -v "$PWD/secrets:/secrets:ro" zendesk-custom:test check --config /secrets/config.json
+```
+
+### 3. Self-hosted Airbyte (e.g. airbyte.plumhq.com)
+
+1. **Publish the image** so the cluster can pull it:
+   - Push to `main` on GitHub — workflow [Publish Docker image](.github/workflows/docker-publish.yml) builds and pushes to **GHCR**.
+   - Open **Actions** on the repo and wait for the workflow to finish (green).
+   - If Airbyte cannot pull: in GitHub → **Packages** → the `airbyte-connector-zendesk` package → **Package settings** → set visibility to **Public** (or configure registry auth on your cluster).
+
+2. **In Airbyte UI** → Settings → **Custom connector** (source) → Add:
+   - **Docker repository:** `ghcr.io/triptisharma15/airbyte-connector-zendesk`
+   - **Docker image tag:** `latest` (or a specific commit SHA from the workflow log)
+
+3. **Sources** → New source → pick your connector → paste the same JSON as `secrets/config.json` → test → save.
+
+4. **Connections** → attach a destination → enable streams → **Sync now** and inspect the job log.
+
 ## Config shape
 
 ```json
