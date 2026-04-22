@@ -1,0 +1,25 @@
+data:
+  ab_internal:
+    ql: 100
+    sl: 100
+  allowedHosts:
+    hosts:
+      - "${subdomain}.zendesk.com"
+      - zendesk.com
+  connectorBuildOptions:
+    baseImage: docker.io/airbyte/python-connector-base:1.1.0
+  connectorSubtype: api
+  connectorType: source
+  definitionId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-zendesk-custom
+  documentationUrl: https://github.com/airbytehq/airbyte
+  githubIssueLabel: source-zendesk-custom
+  license: MIT
+  name: Zendesk Support (Custom)
+  releaseStage: alpha
+  supportLevel: community
+  tags:
+    - language:python
+    - cdk:low-code
+metadataSpecVersion: "1.0"
