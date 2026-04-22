@@ -63,6 +63,20 @@ docker run --rm airbyte/source-zendesk-custom:dev spec
 }
 ```
 
+## Publish to GitHub ([triptisharma15](https://github.com/triptisharma15))
+
+1. On GitHub: **New repository** → name e.g. `airbyte-connector-zendesk` → **Public** → create (no README if you already have commits locally).
+2. In this folder:
+
+```bash
+git remote add origin https://github.com/triptisharma15/airbyte-connector-zendesk.git
+git push -u origin main
+```
+
+Use SSH if you prefer: `git@github.com:triptisharma15/airbyte-connector-zendesk.git`
+
+Confirm `secrets/config.json` is **not** listed in `git status` before pushing (it is gitignored).
+
 ## Extending
 
 Add stream definitions under `manifest.yaml` `definitions` and list them under `streams`. Custom extractors live in `source_declarative_manifest/components.py` and are referenced via `class_name: source_declarative_manifest.components.YourClass`.
