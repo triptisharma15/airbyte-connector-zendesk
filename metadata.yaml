@@ -7,7 +7,7 @@ data:
       - "${subdomain}.zendesk.com"
       - zendesk.com
   connectorBuildOptions:
-    baseImage: docker.io/airbyte/python-connector-base:1.1.0
+    baseImage: docker.io/library/python:3.11-slim-bookworm
   connectorSubtype: api
   connectorType: source
   definitionId: a1b2c3d4-e5f6-7890-abcd-ef1234567890

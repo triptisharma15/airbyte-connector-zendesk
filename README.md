@@ -43,6 +43,8 @@ python main.py discover --config secrets/config.json
 
 ## Docker
 
+The image uses **Python 3.11** (`python:3.11-slim-bookworm`) because **airbyte-cdk 7.x** requires Python **≥ 3.10**; older `airbyte/python-connector-base:1.1.0` is Python 3.9 and will fail at `pip install`.
+
 ```bash
 docker build -t airbyte/source-zendesk-custom:dev .
 docker run --rm airbyte/source-zendesk-custom:dev spec
